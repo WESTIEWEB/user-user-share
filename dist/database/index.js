@@ -3,10 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connection = void 0;
+exports.dbConnection = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const connection = async (url) => {
-    await mongoose_1.default.connect(url);
+const dbConnection = async (url) => {
+    const connection = await mongoose_1.default.connect(url);
+    if (connection) {
+        return console.log('database connected successfully...');
+    }
 };
-exports.connection = connection;
+exports.dbConnection = dbConnection;
 //# sourceMappingURL=index.js.map
