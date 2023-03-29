@@ -4,6 +4,9 @@ import cors from 'cors';
 import logger from 'morgan';
 import { dbConnection } from './database';
 import userRoute from './routes/users-route';
+const socketIO = require("socket.io");
+import http from "http";
+
 
 
 dotenv.config();
@@ -25,8 +28,17 @@ app.use('/', (req, res) => {
     res.send('hello')
 })
 
+// socket io 
+const server = http.createServer(app);
+const io = socketIO(server);
+
+io.on("connection", (socket: any) => {
+    console.log("New client connected");
+    socket.on("disconnect", () => console.log("Client disconnected"));
+});
+
 const port = process.env.port || 3000 
-app.listen(port, ()=> {
-    console.log(`app is listening on: ${port}`)
+server.listen(port, ()=> {
+    console.log(`server is listening on: ${port}`)
 })
 export default app;
